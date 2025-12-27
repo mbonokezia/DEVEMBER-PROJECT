@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Assessment - CareerCompass</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Assessment specific styles */
+        .assessment-progress {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        
+        .question-number {
+            display: inline-block;
+            background: #4e73df;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            text-align: left;
+            border: 2px solid #e3e6f0;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .option-btn:hover {
+            border-color: #4e73df;
+            background: #f8f9fc;
+        }
+        
+        .option-btn.selected {
+            border-color: #4e73df;
+            background: #e3eeff;
+            color: #4e73df;
+        }
+        
+        .rating-scale {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .rating-option {
+            flex: 1;
+            text-align: center;
+            padding: 15px 5px;
+            margin: 0 5px;
+            border: 2px solid #e3e6f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .rating-option:hover {
+            border-color: #4e73df;
+            background: #f8f9fc;
+        }
+        
+        .rating-option.selected {
+            border-color: #4e73df;
+            background: #e3eeff;
+            color: #4e73df;
+        }
+        
+        .assessment-section {
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #e3e6f0;
+        }
+        
+        .section-title {
+            color: #4e73df;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4e73df;
+        }
+        
+        .assessment-navigation {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding: 20px 0;
+            border-top: 1px solid #e3e6f0;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .personality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .personality-item {
+            padding: 20px;
+            border: 2px solid #e3e6f0;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .personality-item:hover {
+            border-color: #4e73df;
+            transform: translateY(-2px);
+        }
+        
+        .personality-item.selected {
+            border-color: #4e73df;
+            background: #e3eeff;
+        }
+        
+        .skill-slider {
+            margin: 25px 0;
+        }
+        
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .skill-value {
+            color: #4e73df;
+            font-weight: bold;
+        }
+        
+        .assessment-completion {
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        
+        .completion-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        
+        .results-container {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .career-match-card {
+            border: 1px solid #e3e6f0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .career-match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .match-percentage {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #28a745;
+            margin-bottom: 10px;
+        }
+        
+        .match-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .match-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .question-card {
+                padding: 20px;
+            }
+            
+            .rating-scale {
+                flex-wrap: wrap;
+            }
+            
+            .rating-option {
+                flex: 0 0 calc(20% - 10px);
+                margin-bottom: 10px;
+                padding: 10px 5px;
+            }
+            
+            .personality-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-compass text-primary me-2"></i>Career<span class="text-primary">Compass</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navigation links on the LEFT -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resources.html">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="assessment.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="pathways.html">Career Pathways</a>
+                    </li>
+                </ul>
+                
+                <!-- Login/Signup buttons on the RIGHT -->
+                <div class="navbar-nav">
+                    <a class="nav-link" href="login.html">Login</a>
+                    <a class="btn btn-primary" href="Sign-up.html">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Assessment Header -->
+    <section class="assessment-header py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto text-center">
+                    <h1 class="display-5 fw-bold mb-3">Career Assessment</h1>
+                    <p class="lead text-muted mb-4">Discover your perfect career match through our comprehensive assessment. Answer honestly for the most accurate results.</p>
+                    
+                    <div class="assessment-stats mb-4">
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <div class="stat-box">
+                                    <div class="stat-number">5</div>
+                                    <div class="stat-label">Sections</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="stat-box">
+                                    <div class="stat-number">25</div>
+                                    <div class="stat-label">Questions</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="stat-box">
+                                    <div class="stat-number">10-15</div>
+                                    <div class="stat-label">Minutes</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="stat-box">
+                                    <div class="stat-number">100%</div>
+                                    <div class="stat-label">Personalized</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Pro Tip:</strong> There are no right or wrong answers. Choose what feels most true to you.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Bar -->
+    <section class="progress-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="assessment-progress">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Assessment Progress</span>
+                            <span id="progressPercentage" class="fw-bold text-primary">0%</span>
+                        </div>
+                        <div class="progress" style="height: 12px;">
+                            <div id="assessmentProgress" class="progress-bar progress-bar-striped progress-bar-animated" 
+                                 role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Form -->
+    <section class="assessment-form py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <form id="careerAssessmentForm">
+                        <!-- SECTION 1: INTERESTS -->
+                        <div class="assessment-section" id="section1">
+                            <h2 class="section-title">
+                                <i class="fas fa-heart me-2"></i>Section 1: Interests & Passions
+                            </h2>
+                            <p class="text-muted mb-4">What activities do you enjoy? Select all that apply.</p>
+                            
+                            <!-- Question 1 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">1</span>
+                                    <h4 class="d-inline">Which subjects do you enjoy most in school?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="1" data-value="math_science">
+                                        <i class="fas fa-calculator me-3"></i>Mathematics & Science
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="1" data-value="languages">
+                                        <i class="fas fa-book me-3"></i>Languages & Literature
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="1" data-value="arts">
+                                        <i class="fas fa-paint-brush me-3"></i>Arts & Creative Subjects
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="1" data-value="social">
+                                        <i class="fas fa-globe-americas me-3"></i>Social Studies & History
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="1" data-value="practical">
+                                        <i class="fas fa-tools me-3"></i>Practical & Technical Subjects
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 2 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">2</span>
+                                    <h4 class="d-inline">What do you enjoy doing in your free time?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="2" data-value="building">
+                                        <i class="fas fa-cogs me-3"></i>Building or fixing things
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="2" data-value="creating">
+                                        <i class="fas fa-palette me-3"></i>Creating art, music, or writing
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="2" data-value="helping">
+                                        <i class="fas fa-hands-helping me-3"></i>Helping others or volunteering
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="2" data-value="analyzing">
+                                        <i class="fas fa-chart-line me-3"></i>Analyzing or researching topics
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="2" data-value="organizing">
+                                        <i class="fas fa-tasks me-3"></i>Organizing events or activities
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 3 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">3</span>
+                                    <h4 class="d-inline">Which career fields interest you the most?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="3" data-value="technology">
+                                        <i class="fas fa-laptop-code me-3"></i>Technology & Computing
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="3" data-value="healthcare">
+                                        <i class="fas fa-heartbeat me-3"></i>Healthcare & Medicine
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="3" data-value="business">
+                                        <i class="fas fa-briefcase me-3"></i>Business & Finance
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="3" data-value="education">
+                                        <i class="fas fa-graduation-cap me-3"></i>Education & Teaching
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="3" data-value="creative">
+                                        <i class="fas fa-film me-3"></i>Creative Arts & Media
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 2: SKILLS -->
+                        <div class="assessment-section" id="section2">
+                            <h2 class="section-title">
+                                <i class="fas fa-star me-2"></i>Section 2: Skills & Abilities
+                            </h2>
+                            <p class="text-muted mb-4">Rate your proficiency in these areas (1 = Novice, 5 = Expert)</p>
+                            
+                            <!-- Question 4 - Problem Solving -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">4</span>
+                                    <h4 class="d-inline">How would you rate your problem-solving skills?</h4>
+                                </div>
+                                <p class="text-muted mb-3">Ability to analyze situations and find solutions</p>
+                                <div class="rating-scale" data-question="4">
+                                    <div class="rating-option" data-value="1">
+                                        <div class="rating-label">1</div>
+                                        <small>Novice</small>
+                                    </div>
+                                    <div class="rating-option" data-value="2">
+                                        <div class="rating-label">2</div>
+                                        <small>Basic</small>
+                                    </div>
+                                    <div class="rating-option" data-value="3">
+                                        <div class="rating-label">3</div>
+                                        <small>Intermediate</small>
+                                    </div>
+                                    <div class="rating-option" data-value="4">
+                                        <div class="rating-label">4</div>
+                                        <small>Advanced</small>
+                                    </div>
+                                    <div class="rating-option" data-value="5">
+                                        <div class="rating-label">5</div>
+                                        <small>Expert</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 5 - Communication -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">5</span>
+                                    <h4 class="d-inline">How would you rate your communication skills?</h4>
+                                </div>
+                                <p class="text-muted mb-3">Ability to express ideas clearly and listen effectively</p>
+                                <div class="rating-scale" data-question="5">
+                                    <div class="rating-option" data-value="1">
+                                        <div class="rating-label">1</div>
+                                        <small>Novice</small>
+                                    </div>
+                                    <div class="rating-option" data-value="2">
+                                        <div class="rating-label">2</div>
+                                        <small>Basic</small>
+                                    </div>
+                                    <div class="rating-option" data-value="3">
+                                        <div class="rating-label">3</div>
+                                        <small>Intermediate</small>
+                                    </div>
+                                    <div class="rating-option" data-value="4">
+                                        <div class="rating-label">4</div>
+                                        <small>Advanced</small>
+                                    </div>
+                                    <div class="rating-option" data-value="5">
+                                        <div class="rating-label">5</div>
+                                        <small>Expert</small>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 6 - Skill Sliders -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">6</span>
+                                    <h4 class="d-inline">Rate your proficiency in these specific skills:</h4>
+                                </div>
+                                
+                                <div class="skill-slider">
+                                    <div class="skill-label">
+                                        <span class="skill-name">Leadership</span>
+                                        <span class="skill-value" id="leadershipValue">3</span>
+                                    </div>
+                                    <input type="range" class="form-range" min="1" max="5" step="1" value="3" 
+                                           id="leadershipSlider" data-skill="leadership">
+                                </div>
+                                
+                                <div class="skill-slider">
+                                    <div class="skill-label">
+                                        <span class="skill-name">Creativity</span>
+                                        <span class="skill-value" id="creativityValue">3</span>
+                                    </div>
+                                    <input type="range" class="form-range" min="1" max="5" step="1" value="3" 
+                                           id="creativitySlider" data-skill="creativity">
+                                </div>
+                                
+                                <div class="skill-slider">
+                                    <div class="skill-label">
+                                        <span class="skill-name">Analytical Thinking</span>
+                                        <span class="skill-value" id="analyticalValue">3</span>
+                                    </div>
+                                    <input type="range" class="form-range" min="1" max="5" step="1" value="3" 
+                                           id="analyticalSlider" data-skill="analytical">
+                                </div>
+                                
+                                <div class="skill-slider">
+                                    <div class="skill-label">
+                                        <span class="skill-name">Teamwork</span>
+                                        <span class="skill-value" id="teamworkValue">3</span>
+                                    </div>
+                                    <input type="range" class="form-range" min="1" max="5" step="1" value="3" 
+                                           id="teamworkSlider" data-skill="teamwork">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 3: PERSONALITY -->
+                        <div class="assessment-section" id="section3">
+                            <h2 class="section-title">
+                                <i class="fas fa-user me-2"></i>Section 3: Personality & Preferences
+                            </h2>
+                            <p class="text-muted mb-4">Which descriptions best match your personality?</p>
+                            
+                            <!-- Question 7 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">7</span>
+                                    <h4 class="d-inline">How do you prefer to work?</h4>
+                                </div>
+                                <div class="personality-grid">
+                                    <div class="personality-item" data-question="7" data-value="independent">
+                                        <i class="fas fa-user fa-2x mb-3"></i>
+                                        <h5>Independently</h5>
+                                        <p class="text-muted small">I prefer working alone on tasks</p>
+                                    </div>
+                                    <div class="personality-item" data-question="7" data-value="team">
+                                        <i class="fas fa-users fa-2x mb-3"></i>
+                                        <h5>In Teams</h5>
+                                        <p class="text-muted small">I enjoy collaborating with others</p>
+                                    </div>
+                                    <div class="personality-item" data-question="7" data-value="structured">
+                                        <i class="fas fa-tasks fa-2x mb-3"></i>
+                                        <h5>Structured Environment</h5>
+                                        <p class="text-muted small">I prefer clear guidelines and routines</p>
+                                    </div>
+                                    <div class="personality-item" data-question="7" data-value="flexible">
+                                        <i class="fas fa-random fa-2x mb-3"></i>
+                                        <h5>Flexible Environment</h5>
+                                        <p class="text-muted small">I enjoy variety and adaptability</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 8 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">8</span>
+                                    <h4 class="d-inline">Which work environment appeals to you most?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="8" data-value="office">
+                                        <i class="fas fa-building me-3"></i>Traditional Office Setting
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="8" data-value="remote">
+                                        <i class="fas fa-home me-3"></i>Remote/Work from Home
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="8" data-value="outdoor">
+                                        <i class="fas fa-tree me-3"></i>Outdoor/Field Work
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="8" data-value="creative">
+                                        <i class="fas fa-palette me-3"></i>Creative Studio/Workspace
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="8" data-value="healthcare">
+                                        <i class="fas fa-hospital me-3"></i>Healthcare Facility
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 9 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">9</span>
+                                    <h4 class="d-inline">What motivates you most in work?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="9" data-value="money">
+                                        <i class="fas fa-money-bill-wave me-3"></i>Financial Success & Security
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="9" data-value="impact">
+                                        <i class="fas fa-hands-helping me-3"></i>Making a Positive Impact
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="9" data-value="challenge">
+                                        <i class="fas fa-puzzle-piece me-3"></i>Intellectual Challenge
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="9" data-value="creativity">
+                                        <i class="fas fa-lightbulb me-3"></i>Creative Expression
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="9" data-value="stability">
+                                        <i class="fas fa-shield-alt me-3"></i>Job Security & Stability
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 4: VALUES -->
+                        <div class="assessment-section" id="section4">
+                            <h2 class="section-title">
+                                <i class="fas fa-balance-scale me-2"></i>Section 4: Values & Priorities
+                            </h2>
+                            <p class="text-muted mb-4">What's most important to you in a career?</p>
+                            
+                            <!-- Question 10 - Ranking -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">10</span>
+                                    <h4 class="d-inline">Rank these career aspects from most to least important (Drag to reorder)</h4>
+                                </div>
+                                
+                                <div class="ranking-container">
+                                    <ul class="list-group" id="valueRanking">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-value="salary">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-grip-vertical text-muted me-3"></i>
+                                                <span>High Salary & Benefits</span>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill rank-number">1</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-value="balance">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-grip-vertical text-muted me-3"></i>
+                                                <span>Work-Life Balance</span>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill rank-number">2</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-value="growth">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-grip-vertical text-muted me-3"></i>
+                                                <span>Career Growth Opportunities</span>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill rank-number">3</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-value="purpose">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-grip-vertical text-muted me-3"></i>
+                                                <span>Meaningful Purpose</span>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill rank-number">4</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center" data-value="recognition">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-grip-vertical text-muted me-3"></i>
+                                                <span>Recognition & Prestige</span>
+                                            </div>
+                                            <span class="badge bg-primary rounded-pill rank-number">5</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 11 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">11</span>
+                                    <h4 class="d-inline">How important is job stability to you?</h4>
+                                </div>
+                                <div class="rating-scale" data-question="11">
+                                    <div class="rating-option" data-value="1">
+                                        <div class="rating-label">1</div>
+                                        <small>Not Important</small>
+                                    </div>
+                                    <div class="rating-option" data-value="2">
+                                        <div class="rating-label">2</div>
+                                        <small>Slightly Important</small>
+                                    </div>
+                                    <div class="rating-option" data-value="3">
+                                        <div class="rating-label">3</div>
+                                        <small>Moderately Important</small>
+                                    </div>
+                                    <div class="rating-option" data-value="4">
+                                        <div class="rating-label">4</div>
+                                        <small>Very Important</small>
+                                    </div>
+                                    <div class="rating-option" data-value="5">
+                                        <div class="rating-label">5</div>
+                                        <small>Extremely Important</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECTION 5: EDUCATIONAL PREFERENCES -->
+                        <div class="assessment-section" id="section5">
+                            <h2 class="section-title">
+                                <i class="fas fa-graduation-cap me-2"></i>Section 5: Education & Goals
+                            </h2>
+                            <p class="text-muted mb-4">Tell us about your educational preferences and career goals</p>
+                            
+                            <!-- Question 12 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">12</span>
+                                    <h4 class="d-inline">What level of education are you willing to pursue?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="12" data-value="highschool">
+                                        <i class="fas fa-school me-3"></i>High School Diploma
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="12" data-value="certificate">
+                                        <i class="fas fa-certificate me-3"></i>Certificate/Diploma
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="12" data-value="associate">
+                                        <i class="fas fa-user-graduate me-3"></i>Associate Degree
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="12" data-value="bachelor">
+                                        <i class="fas fa-university me-3"></i>Bachelor's Degree
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="12" data-value="graduate">
+                                        <i class="fas fa-user-md me-3"></i>Graduate/Professional Degree
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 13 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">13</span>
+                                    <h4 class="d-inline">What are your salary expectations?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="13" data-value="low">
+                                        <i class="fas fa-money-bill me-3"></i>$30,000 - $50,000
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="13" data-value="medium">
+                                        <i class="fas fa-money-bill-wave me-3"></i>$50,000 - $80,000
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="13" data-value="high">
+                                        <i class="fas fa-money-check-alt me-3"></i>$80,000 - $120,000
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="13" data-value="veryhigh">
+                                        <i class="fas fa-chart-line me-3"></i>$120,000+
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="13" data-value="variable">
+                                        <i class="fas fa-exchange-alt me-3"></i>Variable/Commission-based
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Question 14 -->
+                            <div class="question-card">
+                                <div class="question-header mb-4">
+                                    <span class="question-number">14</span>
+                                    <h4 class="d-inline">Where do you see yourself in 5 years?</h4>
+                                </div>
+                                <div class="question-options">
+                                    <button type="button" class="option-btn" data-question="14" data-value="entry">
+                                        <i class="fas fa-arrow-up me-3"></i>Advancing in my first career
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="14" data-value="management">
+                                        <i class="fas fa-users-cog me-3"></i>In a management/supervisory role
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="14" data-value="specialist">
+                                        <i class="fas fa-user-tie me-3"></i>As a specialist/expert in my field
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="14" data-value="entrepreneur">
+                                        <i class="fas fa-rocket me-3"></i>Running my own business/startup
+                                    </button>
+                                    <button type="button" class="option-btn" data-question="14" data-value="graduate">
+                                        <i class="fas fa-user-graduate me-3"></i>Pursuing further education
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Completion Section -->
+                        <div class="assessment-completion" id="completionSection">
+                            <i class="fas fa-check-circle completion-icon"></i>
+                            <h2 class="mb-3">Assessment Complete!</h2>
+                            <p class="lead mb-4">You've answered all the questions. Ready to see your personalized career matches?</p>
+                            <button type="submit" class="btn btn-light btn-lg" id="submitAssessment">
+                                <i class="fas fa-chart-bar me-2"></i> View Your Results
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Results Container -->
+                    <div class="results-container" id="resultsContainer">
+                        <div class="text-center mb-5">
+                            <div class="display-1 text-success mb-3">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h2 class="mb-3">Your Career Matches</h2>
+                            <p class="lead text-muted">Based on your assessment, here are your top career recommendations</p>
+                        </div>
+                        
+                        <div class="row" id="careerResults">
+                            <!-- Results will be populated here by JavaScript -->
+                        </div>
+                        
+                        <div class="mt-5 text-center">
+                            <button class="btn btn-primary btn-lg me-3" id="saveResults">
+                                <i class="fas fa-save me-2"></i> Save Results
+                            </button>
+                            <a href="pathways.html" class="btn btn-outline-primary btn-lg me-3">
+                                <i class="fas fa-search me-2"></i> Explore Careers
+                            </a>
+                            <button class="btn btn-outline-secondary btn-lg" id="retakeAssessment">
+                                <i class="fas fa-redo me-2"></i> Retake Assessment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Buttons -->
+    <section class="assessment-navigation">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-outline-secondary" id="prevSectionBtn" disabled>
+                            <i class="fas fa-arrow-left me-2"></i> Previous Section
+                        </button>
+                        <div class="section-indicator">
+                            <span id="currentSection">Section 1 of 5</span>
+                        </div>
+                        <button class="btn btn-primary" id="nextSectionBtn">
+                            Next Section <i class="fas fa-arrow-right ms-2"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h4 class="mb-3"><i class="fas fa-compass me-2"></i>CareerCompass</h4>
+                    <p>Guiding secondary school students towards fulfilling career paths through personalized assessment and resources.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="resources.html" class="text-white text-decoration-none">Resources</a></li>
+                        <li><a href="assessment.html" class="text-white text-decoration-none">Assessment</a></li>
+                        <li><a href="pathways.html" class="text-white text-decoration-none">Career Pathways</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Account</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="login.html" class="text-white text-decoration-none">Sign In</a></li>
+                        <li><a href="Sign-up.html" class="text-white text-decoration-none">Sign Up</a></li>
+                        <li><a href="Dashboard.html" class="text-white text-decoration-none">Dashboard</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h5 class="mb-3">Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@careercompass.edu</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Education Street</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="bg-light mt-0 mb-4">
+            
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start">
+                    <p>&copy; 2023 CareerCompass. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p>
+                        <a href="privacy.html" class="text-white text-decoration-none me-3">Privacy Policy</a> | 
+                        <a href="terms.html" class="text-white text-decoration-none">Terms of Service</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SortableJS for drag and drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    
+    <script>
+    // Assessment JavaScript
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize variables
+        const sections = document.querySelectorAll('.assessment-section');
+        const totalSections = sections.length;
+        let currentSection = 0;
+        const totalQuestions = 14;
+        const assessmentData = {
+            interests: [],
+            skills: {},
+            personality: {},
+            values: {},
+            education: {},
+            completedQuestions: 0
+        };
+
+        // Initialize Sortable for ranking
+        const valueRanking = document.getElementById('valueRanking');
+        if (valueRanking) {
+            new Sortable(valueRanking, {
+                animation: 150,
+                onEnd: function() {
+                    updateRankingOrder();
+                }
+            });
+        }
+
+        // Initialize skill sliders
+        const sliders = document.querySelectorAll('.skill-slider input[type="range"]');
+        sliders.forEach(slider => {
+            const valueDisplay = document.getElementById(slider.id.replace('Slider', 'Value'));
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = this.value;
+                const skill = this.getAttribute('data-skill');
+                assessmentData.skills[skill] = parseInt(this.value);
+            });
+            
+            // Initialize values
+            const skill = slider.getAttribute('data-skill');
+            assessmentData.skills[skill] = parseInt(slider.value);
+        });
+
+        // Option button selection
+        document.querySelectorAll('.option-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const question = this.getAttribute('data-question');
+                const value = this.getAttribute('data-value');
+                
+                // Deselect other options in the same question
+                const questionButtons = document.querySelectorAll(`.option-btn[data-question="${question}"]`);
+                questionButtons.forEach(btn => btn.classList.remove('selected'));
+                
+                // Select this button
+                this.classList.add('selected');
+                
+                // Store the answer
+                assessmentData.interests[question] = value;
+                
+                // Update progress
+                updateQuestionProgress();
+            });
+        });
+
+        // Rating scale selection
+        document.querySelectorAll('.rating-scale').forEach(scale => {
+            const options = scale.querySelectorAll('.rating-option');
+            options.forEach(option => {
+                option.addEventListener('click', function() {
+                    const question = scale.getAttribute('data-question');
+                    const value = this.getAttribute('data-value');
+                    
+                    // Deselect other options in the same scale
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                    
+                    // Store the answer
+                    assessmentData.skills[question] = parseInt(value);
+                    
+                    // Update progress
+                    updateQuestionProgress();
+                });
+            });
+        });
+
+        // Personality item selection
+        document.querySelectorAll('.personality-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const question = this.getAttribute('data-question');
+                const value = this.getAttribute('data-value');
+                
+                // Deselect other items in the same question
+                const questionItems = document.querySelectorAll(`.personality-item[data-question="${question}"]`);
+                questionItems.forEach(it => it.classList.remove('selected'));
+                
+                // Select this item
+                this.classList.add('selected');
+                
+                // Store the answer
+                assessmentData.personality[question] = value;
+                
+                // Update progress
+                updateQuestionProgress();
+            });
+        });
+
+        // Update ranking order function
+        function updateRankingOrder() {
+            const items = valueRanking.querySelectorAll('.list-group-item');
+            items.forEach((item, index) => {
+                const rankBadge = item.querySelector('.rank-number');
+                rankBadge.textContent = index + 1;
+                
+                const value = item.getAttribute('data-value');
+                assessmentData.values[value] = index + 1;
+            });
+            
+            /////////update progressai
+
+            updateQuestionProgress();
+        }
+
+        // Update question progress (counts answered questions per question-card)
+        function updateQuestionProgress() {
+            const questionCards = document.querySelectorAll('.question-card');
+            let answeredCount = 0;
+
+            questionCards.forEach(card => {
+                // Consider a question answered if any selectable control inside it is set/selected
+                const hasSelectedOption = card.querySelector('.option-btn.selected') !== null;
+                const hasSelectedRating = card.querySelector('.rating-option.selected') !== null;
+                const hasSelectedPersonality = card.querySelector('.personality-item.selected') !== null;
+                const hasSliders = card.querySelectorAll('input[type="range"]').length > 0;
+                const isRanking = card.querySelector('#valueRanking') !== null;
+
+                let cardAnswered = false;
+
+                if (hasSelectedOption || hasSelectedRating || hasSelectedPersonality || hasSliders) {
+                    cardAnswered = true;
+                }
+
+                // For the ranking question, ensure ranking values exist
+                if (isRanking) {
+                    cardAnswered = Object.keys(assessmentData.values).length === 5;
+                }
+
+                if (cardAnswered) answeredCount++;
+            });
+
+            assessmentData.completedQuestions = answeredCount;
+
+            // Update overall progress
+            const progress = (answeredCount / totalQuestions) * 100;
+            const progressBar = document.getElementById('assessmentProgress');
+            const progressPercentage = document.getElementById('progressPercentage');
+
+            progressBar.style.width = `${progress}%`;
+            progressPercentage.textContent = `${Math.round(progress)}%`;
+
+            // Update section progress
+            updateSectionProgress();
+        }
+
+        // Update section progress (calculate actual question count per section)
+        function updateSectionProgress() {
+            const sectionEl = document.getElementById(`section${currentSection + 1}`);
+            if (!sectionEl) return;
+
+            const questionCards = sectionEl.querySelectorAll('.question-card');
+            const questionsInCurrentSection = questionCards.length;
+
+            // Count completed question-cards in the current section
+            let completedInSection = 0;
+            questionCards.forEach(card => {
+                const hasSelectedOption = card.querySelector('.option-btn.selected') !== null;
+                const hasSelectedRating = card.querySelector('.rating-option.selected') !== null;
+                const hasSelectedPersonality = card.querySelector('.personality-item.selected') !== null;
+                const hasSliders = card.querySelectorAll('input[type="range"]').length > 0;
+                const isRanking = card.querySelector('#valueRanking') !== null;
+
+                let cardAnswered = false;
+                if (hasSelectedOption || hasSelectedRating || hasSelectedPersonality || hasSliders) {
+                    cardAnswered = true;
+                }
+                if (isRanking) {
+                    cardAnswered = Object.keys(assessmentData.values).length === 5;
+                }
+                if (cardAnswered) completedInSection++;
+            });
+
+            // Enable/disable next button based on section completion
+            const nextBtn = document.getElementById('nextSectionBtn');
+            if (questionsInCurrentSection === 0 || completedInSection >= questionsInCurrentSection) {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('btn-secondary');
+                nextBtn.classList.add('btn-primary');
+            } else {
+                nextBtn.disabled = true;
+                nextBtn.classList.remove('btn-primary');
+                nextBtn.classList.add('btn-secondary');
+            }
+        }
+
+        // Navigation between sections
+        const prevBtn = document.getElementById('prevSectionBtn');
+        const nextBtn = document.getElementById('nextSectionBtn');
+        const currentSectionDisplay = document.getElementById('currentSection');
+
+        function showSection(index) {
+            // Hide all sections
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show current section
+            sections[index].style.display = 'block';
+            
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            
+            // Update section display
+            currentSectionDisplay.textContent = `Section ${index + 1} of ${totalSections}`;
+            
+            // Scroll to top of section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            // Update section progress
+            updateSectionProgress();
+            
+            // Show completion section if last section
+            const completionSection = document.getElementById('completionSection');
+            if (index === totalSections - 1) {
+                nextBtn.style.display = 'none';
+                completionSection.style.display = 'block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                completionSection.style.display = 'none';
+            }
+        }
+
+        // Initialize with first section
+        showSection(currentSection);
+
+        // Previous section button
+        prevBtn.addEventListener('click', function() {
+            if (currentSection > 0) {
+                currentSection--;
+                showSection(currentSection);
+            }
+        });
+
+        // Next section button
+        nextBtn.addEventListener('click', function() {
+            if (currentSection < totalSections - 1) {
+                currentSection++;
+                showSection(currentSection);
+            }
+        });
+
+        // Submit assessment
+        const submitBtn = document.getElementById('submitAssessment');
+        submitBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Validate all questions are answered
+            if (assessmentData.completedQuestions < totalQuestions) {
+                alert(`Please complete all questions. You've answered ${assessmentData.completedQuestions} out of ${totalQuestions} questions.`);
+                return;
+            }
+            
+            // Show loading
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+            submitBtn.disabled = true;
+            
+            // Simulate processing delay
+            setTimeout(() => {
+                generateResults();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 1500);
+        });
+
+        // Generate assessment results
+        function generateResults() {
+            const resultsContainer = document.getElementById('resultsContainer');
+            const careerResults = document.getElementById('careerResults');
+            const form = document.getElementById('careerAssessmentForm');
+            
+            // Hide form and show results
+            form.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            // Generate career matches based on assessment data
+            const careerMatches = analyzeAssessmentData(assessmentData);
+            
+            // Display career matches
+            let resultsHTML = '';
+            careerMatches.forEach((career, index) => {
+                resultsHTML += `
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="career-match-card">
+                            <div class="match-percentage">${career.match}%</div>
+                            <h4>${career.title}</h4>
+                            <div class="match-bar">
+                                <div class="match-fill" style="width: ${career.match}%"></div>
+                            </div>
+                            <p class="text-muted mb-3">${career.description}</p>
+                            <div class="mb-3">
+                                <small class="text-muted d-block"><strong>Why it matches:</strong></small>
+                                <p class="small">${career.reason}</p>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <a href="pathways.html?career=${encodeURIComponent(career.title)}" class="btn btn-sm btn-outline-primary">
+                                    Learn More
+                                </a>
+                                <button class="btn btn-sm btn-outline-success save-career-result" data-career="${career.title}">
+                                    <i class="far fa-bookmark"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            careerResults.innerHTML = resultsHTML;
+            
+            // Add event listeners to save buttons
+            document.querySelectorAll('.save-career-result').forEach(button => {
+                button.addEventListener('click', function() {
+                    const careerName = this.getAttribute('data-career');
+                    saveCareerResult(careerName, this);
+                });
+            });
+            
+            // Scroll to results
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Analyze assessment data and generate career matches
+        function analyzeAssessmentData(data) {
+            // This is a simplified matching algorithm
+            // In a real application, this would be more sophisticated
+            
+            const allCareers = [
+                {
+                    title: 'Software Developer',
+                    description: 'Design, develop, and test computer applications and systems.',
+                    match: 0,
+                    categories: ['technology', 'analytical', 'creative'],
+                    skills: ['problem_solving', 'analytical', 'creativity'],
+                    education: 'bachelor',
+                    salary: 'high'
+                },
+                {
+                    title: 'Registered Nurse',
+                    description: 'Provide and coordinate patient care, educate patients about health conditions.',
+                    match: 0,
+                    categories: ['healthcare', 'helping', 'teamwork'],
+                    skills: ['communication', 'teamwork', 'empathy'],
+                    education: 'associate',
+                    salary: 'medium'
+                },
+                {
+                    title: 'Marketing Manager',
+                    description: 'Plan and execute marketing strategies to promote products or services.',
+                    match: 0,
+                    categories: ['business', 'creative', 'leadership'],
+                    skills: ['creativity', 'communication', 'leadership'],
+                    education: 'bachelor',
+                    salary: 'high'
+                },
+                {
+                    title: 'Teacher',
+                    description: 'Educate students and help them develop knowledge and skills.',
+                    match: 0,
+                    categories: ['education', 'helping', 'communication'],
+                    skills: ['communication', 'patience', 'leadership'],
+                    education: 'bachelor',
+                    salary: 'medium'
+                },
+                {
+                    title: 'Graphic Designer',
+                    description: 'Create visual concepts to communicate ideas that inspire and inform.',
+                    match: 0,
+                    categories: ['creative', 'technology', 'independent'],
+                    skills: ['creativity', 'technical', 'communication'],
+                    education: 'bachelor',
+                    salary: 'medium'
+                },
+                {
+                    title: 'Data Analyst',
+                    description: 'Collect, process, and analyze data to help organizations make decisions.',
+                    match: 0,
+                    categories: ['technology', 'analytical', 'business'],
+                    skills: ['analytical', 'problem_solving', 'attention'],
+                    education: 'bachelor',
+                    salary: 'high'
+                }
+            ];
+            
+            // Calculate matches based on interests
+            allCareers.forEach(career => {
+                let matchScore = 0;
+                
+                // Check interests (questions 1-3)
+                const interests = Object.values(data.interests).slice(0, 3);
+                interests.forEach(interest => {
+                    if (career.categories.includes(interest)) {
+                        matchScore += 15;
+                    }
+                });
+                
+                // Check skills (questions 4-6)
+                const skillValues = Object.values(data.skills).slice(0, 3);
+                const avgSkill = skillValues.reduce((a, b) => a + b, 0) / skillValues.length || 3;
+                matchScore += avgSkill * 5;
+                
+                // Check personality (questions 7-9)
+                const personality = Object.values(data.personality);
+                personality.forEach(trait => {
+                    if (career.categories.includes(trait)) {
+                        matchScore += 10;
+                    }
+                });
+                
+                // Check values (question 10-11)
+                const hasValues = Object.keys(data.values).length > 0;
+                if (hasValues) matchScore += 10;
+                
+                career.match = Math.min(95, Math.round(matchScore));
+            });
+            
+            // Sort by match score and return top 6
+            return allCareers
+                .sort((a, b) => b.match - a.match)
+                .slice(0, 6);
+        }
+
+        // Save career result
+        function saveCareerResult(careerName, button) {
+            const originalHTML = button.innerHTML;
+            
+            // Show saving state
+            button.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+            button.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check"></i> Saved';
+                button.classList.remove('btn-outline-success');
+                button.classList.add('btn-success');
+                
+                // Show success message
+                showAlert(`"${careerName}" has been saved to your profile!`, 'success');
+                
+                // Revert after 2 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-outline-success');
+                    button.disabled = false;
+                }, 2000);
+            }, 1000);
+        }
+
+        // Save results button
+        document.getElementById('saveResults').addEventListener('click', function() {
+            const button = this;
+            const originalHTML = button.innerHTML;
+            
+            button.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                showAlert('Your assessment results have been saved to your dashboard!', 'success');
+                button.innerHTML = originalHTML;
+                button.disabled = false;
+            }, 1500);
+        });
+
+        // Retake assessment button
+        document.getElementById('retakeAssessment').addEventListener('click', function() {
+            if (confirm('Are you sure you want to retake the assessment? Your current answers will be lost.')) {
+                location.reload();
+            }
+        });
+
+        // Helper function to show alerts
+        function showAlert(message, type = 'info') {
+            // Remove any existing alerts
+            const existingAlert = document.querySelector('.assessment-alert');
+            if (existingAlert) existingAlert.remove();
+            
+            // Create alert element
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} assessment-alert alert-dismissible fade show`;
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Initialize question progress
+        updateQuestionProgress();
+    });
+    </script>
+</body>
+</html>

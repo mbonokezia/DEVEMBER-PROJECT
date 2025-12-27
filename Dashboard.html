@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CareerCompass</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Matching original color scheme */
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --info-color: #17a2b8;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        
+        /* Navbar - matching original */
+        .navbar {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            padding: 8px 15px !important;
+        }
+        
+        .nav-link.active {
+            color: var(--primary-color) !important;
+            font-weight: 600;
+        }
+        
+        /* Dashboard Hero */
+        .dashboard-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 40px;
+        }
+        
+        .welcome-text h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        
+        /* Stats Cards */
+        .stats-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            height: 100%;
+            border-left: 5px solid var(--primary-color);
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stats-card.green {
+            border-left-color: var(--success-color);
+        }
+        
+        .stats-card.orange {
+            border-left-color: var(--warning-color);
+        }
+        
+        .stats-card.purple {
+            border-left-color: #9b59b6;
+        }
+        
+        .stats-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .stats-card.green .stats-icon {
+            color: var(--success-color);
+        }
+        
+        .stats-card.orange .stats-icon {
+            color: var(--warning-color);
+        }
+        
+        .stats-card.purple .stats-icon {
+            color: #9b59b6;
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .stats-label {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        /* Dashboard Cards */
+        .dashboard-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .card-header {
+            border-bottom: 2px solid #f1f1f1;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .card-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 0;
+        }
+        
+        /* Career List */
+        .career-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background-color 0.3s;
+        }
+        
+        .career-item:last-child {
+            border-bottom: none;
+        }
+        
+        .career-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .career-icon {
+            width: 50px;
+            height: 50px;
+            background-color: #e3f2fd;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .career-icon i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .career-info {
+            flex: 1;
+        }
+        
+        .career-info h5 {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+        
+        .career-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .career-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* Assessment History */
+        .assessment-item {
+            padding: 20px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background-color 0.3s;
+        }
+        
+        .assessment-item:last-child {
+            border-bottom: none;
+        }
+        
+        .assessment-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .assessment-date {
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 5px;
+        }
+        
+        .assessment-result {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .assessment-match {
+            display: inline-block;
+            padding: 5px 12px;
+            background-color: #e8f5e9;
+            color: var(--success-color);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            border-radius: 5px;
+        }
+        
+        /* Quick Actions */
+        .quick-action {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .quick-action:hover {
+            background-color: #e9ecef;
+            transform: translateX(5px);
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .action-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .action-info h5 {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+        
+        .action-info p {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .empty-state-icon {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+        
+        .empty-state h4 {
+            color: #999;
+            margin-bottom: 15px;
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* Footer */
+        .main-footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 50px 0 20px;
+            margin-top: 80px;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-text h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-number {
+                font-size: 2rem;
+            }
+            
+            .career-item, .assessment-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .career-icon, .action-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .career-actions {
+                margin-top: 15px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-compass text-primary me-2"></i>Career<span class="text-primary">Compass</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Navigation links on the LEFT -->
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resources.html">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="assessment.html">Assessment</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="pathways.html">Career Pathways</a>
+                    </li>
+                </ul>
+                
+                <!-- Login/Signup buttons on the RIGHT -->
+                <div class="navbar-nav">
+                    <a class="nav-link" href="login.html">Login</a>
+                    <a class="btn btn-primary" href="Sign-up.html">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Hero -->
+    <section class="dashboard-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="welcome-text">
+                        <h1 id="welcomeMessage">Welcome back, Student!</h1>
+                        <p>Track your career journey, access saved careers, and view your assessment results.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <a href="assessment.html" class="btn btn-outline-light me-2">
+                        <i class="fas fa-clipboard-check me-2"></i> Take New Assessment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Content -->
+    <div class="container">
+        <!-- Stats Overview -->
+        <div class="row mb-5">
+            <div class="col-md-3 mb-4">
+                <div class="stats-card">
+                    <div class="stats-icon">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <div class="stats-number" id="savedCount">0</div>
+                    <div class="stats-label">Saved Careers</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card green">
+                    <div class="stats-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="stats-number" id="assessmentCount">0</div>
+                    <div class="stats-label">Assessments Taken</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card orange">
+                    <div class="stats-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stats-number" id="matchScore">0%</div>
+                    <div class="stats-label">Average Match</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="stats-card purple">
+                    <div class="stats-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stats-number" id="progressPercent">0%</div>
+                    <div class="stats-label">Profile Complete</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-lg-8">
+                <!-- Saved Careers -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bookmark me-2"></i> Saved Careers</h3>
+                    </div>
+                    <div id="savedCareersList">
+                        <!-- Saved careers will be loaded here -->
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <i class="far fa-bookmark"></i>
+                            </div>
+                            <h4>No saved careers yet</h4>
+                            <p>Start exploring career pathways and save your favorites!</p>
+                            <a href="pathways.html" class="btn btn-primary mt-3">
+                                <i class="fas fa-search me-2"></i> Explore Careers
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assessment History -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-history me-2"></i> Assessment History</h3>
+                    </div>
+                    <div id="assessmentHistory">
+                        <!-- Assessment history will be loaded here -->
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <h4>No assessments taken yet</h4>
+                            <p>Take your first career assessment to get personalized recommendations!</p>
+                            <a href="assessment.html" class="btn btn-primary mt-3">
+                                <i class="fas fa-play me-2"></i> Start Assessment
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-lg-4">
+                <!-- Quick Actions -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bolt me-2"></i> Quick Actions</h3>
+                    </div>
+                    <a href="assessment.html" class="quick-action">
+                        <div class="action-icon">
+                            <i class="fas fa-clipboard-check"></i>
+                        </div>
+                        <div class="action-info">
+                            <h5>Take Career Assessment</h5>
+                            <p>Discover careers that match your personality and interests</p>
+                        </div>
+                    </a>
+                    
+                    <a href="pathways.html" class="quick-action">
+                        <div class="action-icon" style="background-color: var(--success-color);">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="action-info">
+                            <h5>Explore Career Pathways</h5>
+                            <p>Browse hundreds of career options with detailed information</p>
+                        </div>
+                    </a>
+                    
+                    <a href="resources.html" class="quick-action">
+                        <div class="action-icon" style="background-color: var(--warning-color);">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="action-info">
+                            <h5>Access Resources</h5>
+                            <p>Download templates, guides, and educational materials</p>
+                        </div>
+                    </a>
+                    
+                    <a href="profile.html" class="quick-action">
+                        <div class="action-icon" style="background-color: var(--info-color);">
+                            <i class="fas fa-user-edit"></i>
+                        </div>
+                        <div class="action-info">
+                            <h5>Complete Your Profile</h5>
+                            <p>Update your information for better recommendations</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Progress Tracker -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-line me-2"></i> Profile Progress</h3>
+                    </div>
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Profile Completion</span>
+                            <span id="progressText">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-checklist">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="profileCheck" checked disabled>
+                            <label class="form-check-label" for="profileCheck">
+                                Account Created
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="assessmentCheck" disabled>
+                            <label class="form-check-label" for="assessmentCheck">
+                                Career Assessment Taken
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="careersCheck" disabled>
+                            <label class="form-check-label" for="careersCheck">
+                                3+ Careers Saved
+                            </label>
+                        </div>
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="profileCompleteCheck" disabled>
+                            <label class="form-check-label" for="profileCompleteCheck">
+                                Profile Information Complete
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="resourcesCheck" disabled>
+                            <label class="form-check-label" for="resourcesCheck">
+                                Resources Downloaded
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Recommendations -->
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-lightbulb me-2"></i> Top Recommendations</h3>
+                    </div>
+                    <div id="recommendationsList">
+                        <div class="empty-state py-3">
+                            <div class="empty-state-icon" style="font-size: 2.5rem;">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h5>No recommendations yet</h5>
+                            <p>Complete an assessment to get personalized career suggestions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-compass me-2"></i>CareerCompass</h5>
+                    <p class="mt-3">Guiding secondary school students towards fulfilling career paths through assessment, resources, and personalized guidance.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="index.html">Home</a></li>
+                        <li class="mb-2"><a href="resources.html">Resources</a></li>
+                        <li class="mb-2"><a href="assessment.html">Assessment</a></li>
+                        <li class="mb-2"><a href="pathways.html">Career Pathways</a></li>
+                        <li class="mb-2"><a href="Dashboard.html">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Account</h5>
+                    <ul class="list-unstyled footer-links">
+                        <li class="mb-2"><a href="profile.html">My Profile</a></li>
+                        <li class="mb-2"><a href="settings.html">Settings</a></li>
+                        <li class="mb-2"><a href="help.html">Help Center</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@careercompass.edu</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (555) 123-4567</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Education St, City</li>
+                    </ul>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="bg-light my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2023 CareerCompass. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p><a href="privacy.html" class="text-white me-3">Privacy Policy</a> | 
+                       <a href="terms.html" class="text-white">Terms of Service</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Dashboard data and functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in
+            checkLoginStatus();
+            
+            // Load user data
+            loadUserData();
+            
+            // Load saved careers
+            loadSavedCareers();
+            
+            // Load assessment history
+            loadAssessmentHistory();
+            
+            // Load recommendations
+            loadRecommendations();
+            
+            // Calculate and update progress
+            updateProgress();
+            
+            // Setup event listeners
+            setupEventListeners();
+        });
+
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            if (!isLoggedIn) {
+                // Redirect to login page
+                window.location.href = 'login.html';
+            }
+        }
+
+        function loadUserData() {
+            // Load user from localStorage
+            const userData = JSON.parse(localStorage.getItem('careerCompassUser')) || {
+                firstName: 'Student',
+                lastName: '',
+                email: '',
+                username: 'student123'
+            };
+            
+            // Update welcome message
+            document.getElementById('welcomeMessage').textContent = `Welcome back, ${userData.firstName}!`;
+            document.getElementById('usernameDisplay').textContent = userData.firstName;
+            
+            // Update profile progress
+            document.getElementById('progressText').textContent = '25%';
+            document.getElementById('progressBar').style.width = '25%';
+        }
+
+        function loadSavedCareers() {
+            const savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+            const savedCareersList = document.getElementById('savedCareersList');
+            
+            // Update count
+            document.getElementById('savedCount').textContent = savedCareers.length;
+            
+            if (savedCareers.length === 0) {
+                // Show empty state (already in HTML)
+                return;
+            }
+            
+            // Clear empty state
+            savedCareersList.innerHTML = '';
+            
+            // Display saved careers (limit to 5 for dashboard)
+            savedCareers.slice(0, 5).forEach(career => {
+                const careerItem = document.createElement('div');
+                careerItem.className = 'career-item';
+                careerItem.innerHTML = `
+                    <div class="career-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="career-info">
+                        <h5>${career.title}</h5>
+                        <p>${career.category}</p>
+                    </div>
+                    <div class="career-actions">
+                        <a href="pathways.html?career=${encodeURIComponent(career.title)}" class="btn btn-sm btn-outline-primary">
+                            View
+                        </a>
+                        <button class="btn btn-sm btn-outline-danger remove-career-btn" data-career-id="${career.id}">
+                            Remove
+                        </button>
+                    </div>
+                `;
+                savedCareersList.appendChild(careerItem);
+            });
+            
+            // Add view all link if more than 5
+            if (savedCareers.length > 5) {
+                const viewAllDiv = document.createElement('div');
+                viewAllDiv.className = 'text-center mt-3';
+                viewAllDiv.innerHTML = `
+                    <a href="profile.html#saved-careers" class="btn btn-outline-primary btn-sm">
+                        View All ${savedCareers.length} Saved Careers
+                    </a>
+                `;
+                savedCareersList.appendChild(viewAllDiv);
+            }
+        }
+
+        function loadAssessmentHistory() {
+            const assessments = JSON.parse(localStorage.getItem('assessments')) || [];
+            const assessmentHistory = document.getElementById('assessmentHistory');
+            
+            // Update count
+            document.getElementById('assessmentCount').textContent = assessments.length;
+            
+            if (assessments.length === 0) {
+                // Show empty state (already in HTML)
+                return;
+            }
+            
+            // Clear empty state
+            assessmentHistory.innerHTML = '';
+            
+            // Display assessment history (limit to 3 for dashboard)
+            assessments.slice(0, 3).forEach(assessment => {
+                const assessmentItem = document.createElement('div');
+                assessmentItem.className = 'assessment-item';
+                assessmentItem.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="assessment-date">${assessment.date}</div>
+                            <div class="assessment-result">Top match: ${assessment.topMatch}</div>
+                            <span class="assessment-match">${assessment.matchScore}% match</span>
+                        </div>
+                        <a href="assessment-results.html?id=${assessment.id}" class="btn btn-sm btn-outline-primary">
+                            View Results
+                        </a>
+                    </div>
+                `;
+                assessmentHistory.appendChild(assessmentItem);
+            });
+            
+            // Add view all link if more than 3
+            if (assessments.length > 3) {
+                const viewAllDiv = document.createElement('div');
+                viewAllDiv.className = 'text-center mt-3';
+                viewAllDiv.innerHTML = `
+                    <a href="profile.html#assessments" class="btn btn-outline-primary btn-sm">
+                        View All ${assessments.length} Assessments
+                    </a>
+                `;
+                assessmentHistory.appendChild(viewAllDiv);
+            }
+            
+            // Update average match score
+            if (assessments.length > 0) {
+                const totalScore = assessments.reduce((sum, assessment) => sum + parseInt(assessment.matchScore), 0);
+                const averageScore = Math.round(totalScore / assessments.length);
+                document.getElementById('matchScore').textContent = `${averageScore}%`;
+            }
+        }
+
+        function loadRecommendations() {
+            const recommendations = JSON.parse(localStorage.getItem('recommendations')) || [];
+            const recommendationsList = document.getElementById('recommendationsList');
+            
+            if (recommendations.length === 0) {
+                // Show empty state (already in HTML)
+                return;
+            }
+            
+            // Clear empty state
+            recommendationsList.innerHTML = '';
+            
+            // Display recommendations (limit to 3 for dashboard)
+            recommendations.slice(0, 3).forEach(rec => {
+                const recDiv = document.createElement('div');
+                recDiv.className = 'mb-3 p-3 border rounded';
+                recDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="mb-1 fw-bold">${rec.title}</h6>
+                            <p class="small text-muted mb-2">${rec.reason}</p>
+                            <span class="badge bg-primary">${rec.match}% match</span>
+                        </div>
+                        <a href="pathways.html?career=${encodeURIComponent(rec.title)}" class="btn btn-sm btn-outline-primary">
+                            Explore
+                        </a>
+                    </div>
+                `;
+                recommendationsList.appendChild(recDiv);
+            });
+        }
+
+        function updateProgress() {
+            const userData = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+            const assessments = JSON.parse(localStorage.getItem('assessments')) || [];
+            
+            let progress = 25; // Base for account creation
+            
+            // Check assessment taken
+            if (assessments.length > 0) {
+                progress += 25;
+                document.getElementById('assessmentCheck').checked = true;
+            }
+            
+            // Check 3+ careers saved
+            if (savedCareers.length >= 3) {
+                progress += 25;
+                document.getElementById('careersCheck').checked = true;
+            }
+            
+            // Check profile complete (has school and grade)
+            if (userData.school && userData.gradeLevel) {
+                progress += 15;
+                document.getElementById('profileCompleteCheck').checked = true;
+            }
+            
+            // Check resources downloaded (demo - always false for now)
+            // In real app, this would check actual downloads
+            
+            // Update progress display
+            document.getElementById('progressPercent').textContent = `${progress}%`;
+            document.getElementById('progressText').textContent = `${progress}%`;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        function setupEventListeners() {
+            // Logout button
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Clear local storage
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('careerCompassUser');
+                
+                // Redirect to home page
+                window.location.href = 'index.html';
+            });
+            
+            // Remove career buttons (event delegation)
+            document.getElementById('savedCareersList').addEventListener('click', function(e) {
+                if (e.target.classList.contains('remove-career-btn') || 
+                    e.target.closest('.remove-career-btn')) {
+                    const button = e.target.classList.contains('remove-career-btn') ? 
+                        e.target : e.target.closest('.remove-career-btn');
+                    const careerId = button.getAttribute('data-career-id');
+                    removeCareer(careerId);
+                }
+            });
+        }
+
+        function removeCareer(careerId) {
+            let savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+            savedCareers = savedCareers.filter(career => career.id !== careerId);
+            localStorage.setItem('savedCareers', JSON.stringify(savedCareers));
+            
+            // Reload saved careers
+            loadSavedCareers();
+            updateProgress();
+            
+            // Show success message
+            showAlert('Career removed from saved list', 'success');
+        }
+
+        function showAlert(message, type = 'info') {
+            // Remove existing alerts
+            const existingAlert = document.querySelector('.custom-alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            // Create alert
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `custom-alert alert alert-${type} alert-dismissible fade show`;
+            alertDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                min-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            
+            alertDiv.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // Add to page
+            document.body.appendChild(alertDiv);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    const bsAlert = new bootstrap.Alert(alertDiv);
+                    bsAlert.close();
+                }
+            }, 5000);
+        }
+        
+        // Demo data for first-time users
+        if (!localStorage.getItem('dashboardInitialized')) {
+            // Add some demo data
+            const demoCareers = [
+                { id: 1, title: 'Software Developer', category: 'Technology' },
+                { id: 2, title: 'Data Scientist', category: 'Technology' }
+            ];
+            
+            const demoAssessments = [
+                { id: 1, date: '2023-10-15', topMatch: 'Technology Fields', matchScore: '85' }
+            ];
+            
+            const demoRecommendations = [
+                { title: 'Software Developer', reason: 'Matches your problem-solving skills', match: '92' },
+                { title: 'Data Analyst', reason: 'Aligns with your analytical thinking', match: '87' }
+            ];
+            
+            localStorage.setItem('savedCareers', JSON.stringify(demoCareers));
+            localStorage.setItem('assessments', JSON.stringify(demoAssessments));
+            localStorage.setItem('recommendations', JSON.stringify(demoRecommendations));
+            localStorage.setItem('dashboardInitialized', 'true');
+            
+            // Reload data
+            loadSavedCareers();
+            loadAssessmentHistory();
+            loadRecommendations();
+            updateProgress();
+        }
+    </script>
+</body>
+</html>
