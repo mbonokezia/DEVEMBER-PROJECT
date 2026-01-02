@@ -55,8 +55,8 @@
         .dashboard-hero {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 60px 0 40px;
-            margin-bottom: 40px;
+            padding: 30px 0 20px;
+            margin-bottom: 20px;
         }
         
         .welcome-text h1 {
@@ -75,7 +75,7 @@
         .stats-card {
             background-color: white;
             border-radius: 12px;
-            padding: 25px;
+            padding: 18px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s;
             height: 100%;
@@ -133,10 +133,17 @@
         .dashboard-card {
             background-color: white;
             border-radius: 12px;
-            padding: 30px;
+            padding: 18px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             height: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 18px;
+        }
+
+        /* Compact variant for cards that should be shorter */
+        .compact-card {
+            padding: 12px;
+            max-height: 340px;
+            overflow-y: auto;
         }
         
         .card-header {
@@ -352,7 +359,7 @@
         
         /* Footer */
         .main-footer {
-            background-color: var(--secondary-color);
+            background-color: #212529;
             color: white;
             padding: 50px 0 20px;
             margin-top: 80px;
@@ -445,6 +452,9 @@
                     <a href="assessment.html" class="btn btn-outline-light me-2">
                         <i class="fas fa-clipboard-check me-2"></i> Take New Assessment
                     </a>
+                    <a href="profile.html" class="btn btn-outline-light">
+                        <i class="fas fa-user me-2"></i> Profile
+                    </a>
                 </div>
             </div>
         </div>
@@ -496,7 +506,7 @@
             <!-- Left Column -->
             <div class="col-lg-8">
                 <!-- Saved Careers -->
-                <div class="dashboard-card">
+                <div class="dashboard-card compact-card">
                     <div class="card-header">
                         <h3><i class="fas fa-bookmark me-2"></i> Saved Careers</h3>
                     </div>
@@ -516,7 +526,7 @@
                 </div>
 
                 <!-- Assessment History -->
-                <div class="dashboard-card">
+                <div class="dashboard-card compact-card">
                     <div class="card-header">
                         <h3><i class="fas fa-history me-2"></i> Assessment History</h3>
                     </div>
@@ -539,7 +549,7 @@
             <!-- Right Column -->
             <div class="col-lg-4">
                 <!-- Quick Actions -->
-                <div class="dashboard-card">
+                <div class="dashboard-card compact-card">
                     <div class="card-header">
                         <h3><i class="fas fa-bolt me-2"></i> Quick Actions</h3>
                     </div>
@@ -584,8 +594,28 @@
                     </a>
                 </div>
 
+                <!-- Reset Data (Admin / Shared Device) -->
+                <div id="resetCardContainer" class="dashboard-card compact-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-redo me-2"></i> Reset Data</h3>
+                    </div>
+                    <div class="mb-3">
+                        <p class="small text-muted">Clear data so another student can use this device without seeing prior results.</p>
+                        <div class="d-grid gap-2">
+                            <button id="clearMyDataBtn" class="btn btn-outline-secondary btn-sm">Clear My Data</button>
+                            <button id="exportDataBtn" class="btn btn-outline-primary btn-sm">Export My Data (JSON)</button>
+                            <!-- Export as PDF removed -->
+                            <!-- Email Summary removed -->
+                            <button id="resetSavedBtn" class="btn btn-outline-danger btn-sm">Clear Saved Careers (device)</button>
+                            <button id="resetAssessmentsBtn" class="btn btn-outline-danger btn-sm">Clear Assessment Records (device)</button>
+                            <button id="resetRecommendationsBtn" class="btn btn-outline-danger btn-sm">Clear Recommendations (device)</button>
+                            <button id="resetAllBtn" class="btn btn-danger btn-sm">Clear All Above (device)</button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Progress Tracker -->
-                <div class="dashboard-card">
+                <div class="dashboard-card compact-card">
                     <div class="card-header">
                         <h3><i class="fas fa-chart-line me-2"></i> Profile Progress</h3>
                     </div>
@@ -634,7 +664,7 @@
                 </div>
 
                 <!-- Recent Recommendations -->
-                <div class="dashboard-card">
+                <div class="dashboard-card compact-card">
                     <div class="card-header">
                         <h3><i class="fas fa-lightbulb me-2"></i> Top Recommendations</h3>
                     </div>
@@ -674,18 +704,18 @@
                     <h5>Account</h5>
                     <ul class="list-unstyled footer-links">
                         <li class="mb-2"><a href="profile.html">My Profile</a></li>
-                        <li class="mb-2"><a href="settings.html">Settings</a></li>
-                        <li class="mb-2"><a href="help.html">Help Center</a></li>
+                        <!-- <li class="mb-2"><a href="settings.html">Settings</a></li>
+                        <li class="mb-2"><a href="help.html">Help Center</a></li> -->
                     </ul>
                 </div>
                 <div class="col-md-3 mb-4">
                     <h5>Contact Us</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@careercompass.edu</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (555) 123-4567</li>
-                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> 123 Education St, City</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> mbonokezia@gmail.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 672649076</li>
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Bamenda</li>
                     </ul>
-                    <div class="mt-3">
+                    <div class="mt-3 d-flex justify-content-start">
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
@@ -696,7 +726,7 @@
             <hr class="bg-light my-4">
             <div class="row">
                 <div class="col-md-6">
-                    <p>&copy; 2023 CareerCompass. All rights reserved.</p>
+                    <p>&copy; 2025 CareerCompass. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <p><a href="privacy.html" class="text-white me-3">Privacy Policy</a> | 
@@ -733,13 +763,43 @@
             
             // Setup event listeners
             setupEventListeners();
+
+            // Control visibility: device reset buttons remain admin-only,
+            // while personal controls (Clear My Data / Export My Data) are visible to any signed-in user.
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+                const isAdmin = currentUser.isAdmin === true;
+                const ownerId = currentUser.username || currentUser.email || null;
+                const resetCard = document.getElementById('resetCardContainer');
+                if (resetCard) {
+                    // show the card if admin or a signed-in user (so they can access personal controls)
+                    resetCard.style.display = (isAdmin || ownerId) ? '' : 'none';
+
+                    // device-wide buttons -> only visible to admins
+                    ['resetSavedBtn','resetAssessmentsBtn','resetRecommendationsBtn','resetAllBtn'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.style.display = isAdmin ? '' : 'none';
+                    });
+
+                    // personal buttons -> visible to any signed-in user
+                    const clearBtn = document.getElementById('clearMyDataBtn');
+                    const exportBtn = document.getElementById('exportDataBtn');
+                    if (clearBtn) clearBtn.style.display = ownerId ? '' : 'none';
+                    if (exportBtn) exportBtn.style.display = ownerId ? '' : 'none';
+                }
+            } catch (e) {
+                // if parsing fails, hide the reset card
+                const resetCard = document.getElementById('resetCardContainer');
+                if (resetCard) resetCard.style.display = 'none';
+            }
         });
 
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (!isLoggedIn) {
-                // Redirect to login page
-                window.location.href = 'login.html';
+                // Demo behavior: do not redirect so local saved careers are visible.
+                // In a real app this would redirect to the login page.
+                console.warn('User not logged in — showing dashboard in demo mode.');
             }
         }
 
@@ -752,23 +812,37 @@
                 username: 'student123'
             };
             
-            // Update welcome message
-            document.getElementById('welcomeMessage').textContent = `Welcome back, ${userData.firstName}!`;
-            document.getElementById('usernameDisplay').textContent = userData.firstName;
+            // Update welcome message (guard against missing elements)
+            const welcomeEl = document.getElementById('welcomeMessage');
+            if (welcomeEl) welcomeEl.textContent = `Welcome back, ${userData.firstName}!`;
+
+            const usernameEl = document.getElementById('usernameDisplay');
+            if (usernameEl) usernameEl.textContent = userData.firstName;
             
-            // Update profile progress
-            document.getElementById('progressText').textContent = '25%';
-            document.getElementById('progressBar').style.width = '25%';
+            // Update profile progress (guard updates)
+            const progressTextEl = document.getElementById('progressText');
+            if (progressTextEl) progressTextEl.textContent = '25%';
+            const progressBarEl = document.getElementById('progressBar');
+            if (progressBarEl) progressBarEl.style.width = '25%';
         }
 
         function loadSavedCareers() {
             const savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
             const savedCareersList = document.getElementById('savedCareersList');
-            
+
+            // Filter by current user when available (owner field)
+            const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const ownerId = currentUser.username || currentUser.email || null;
+            const visibleSaved = savedCareers.filter(sc => {
+                // If item has owner, only show to that owner. If no owner, treat as device-wide and hide from students.
+                if (sc.owner) return ownerId && sc.owner === ownerId;
+                return false;
+            });
+
             // Update count
-            document.getElementById('savedCount').textContent = savedCareers.length;
-            
-            if (savedCareers.length === 0) {
+            document.getElementById('savedCount').textContent = visibleSaved.length;
+
+            if (visibleSaved.length === 0) {
                 // Show empty state (already in HTML)
                 return;
             }
@@ -777,7 +851,7 @@
             savedCareersList.innerHTML = '';
             
             // Display saved careers (limit to 5 for dashboard)
-            savedCareers.slice(0, 5).forEach(career => {
+            visibleSaved.slice(0, 5).forEach(career => {
                 const careerItem = document.createElement('div');
                 careerItem.className = 'career-item';
                 careerItem.innerHTML = `
@@ -786,7 +860,7 @@
                     </div>
                     <div class="career-info">
                         <h5>${career.title}</h5>
-                        <p>${career.category}</p>
+                        <p>${career.category || ''}</p>
                     </div>
                     <div class="career-actions">
                         <a href="pathways.html?career=${encodeURIComponent(career.title)}" class="btn btn-sm btn-outline-primary">
@@ -801,12 +875,12 @@
             });
             
             // Add view all link if more than 5
-            if (savedCareers.length > 5) {
+            if (visibleSaved.length > 5) {
                 const viewAllDiv = document.createElement('div');
                 viewAllDiv.className = 'text-center mt-3';
                 viewAllDiv.innerHTML = `
                     <a href="profile.html#saved-careers" class="btn btn-outline-primary btn-sm">
-                        View All ${savedCareers.length} Saved Careers
+                        View All ${visibleSaved.length} Saved Careers
                     </a>
                 `;
                 savedCareersList.appendChild(viewAllDiv);
@@ -817,10 +891,15 @@
             const assessments = JSON.parse(localStorage.getItem('assessments')) || [];
             const assessmentHistory = document.getElementById('assessmentHistory');
             
+            // Filter assessments by owner
+            const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const ownerId = currentUser.username || currentUser.email || null;
+            const visibleAssessments = assessments.filter(a => a.owner ? (ownerId && a.owner === ownerId) : false);
+
             // Update count
-            document.getElementById('assessmentCount').textContent = assessments.length;
+            document.getElementById('assessmentCount').textContent = visibleAssessments.length;
             
-            if (assessments.length === 0) {
+            if (visibleAssessments.length === 0) {
                 // Show empty state (already in HTML)
                 return;
             }
@@ -829,7 +908,7 @@
             assessmentHistory.innerHTML = '';
             
             // Display assessment history (limit to 3 for dashboard)
-            assessments.slice(0, 3).forEach(assessment => {
+            visibleAssessments.slice(0, 3).forEach(assessment => {
                 const assessmentItem = document.createElement('div');
                 assessmentItem.className = 'assessment-item';
                 assessmentItem.innerHTML = `
@@ -848,21 +927,21 @@
             });
             
             // Add view all link if more than 3
-            if (assessments.length > 3) {
+            if (visibleAssessments.length > 3) {
                 const viewAllDiv = document.createElement('div');
                 viewAllDiv.className = 'text-center mt-3';
                 viewAllDiv.innerHTML = `
                     <a href="profile.html#assessments" class="btn btn-outline-primary btn-sm">
-                        View All ${assessments.length} Assessments
+                        View All ${visibleAssessments.length} Assessments
                     </a>
                 `;
                 assessmentHistory.appendChild(viewAllDiv);
             }
             
             // Update average match score
-            if (assessments.length > 0) {
-                const totalScore = assessments.reduce((sum, assessment) => sum + parseInt(assessment.matchScore), 0);
-                const averageScore = Math.round(totalScore / assessments.length);
+            if (visibleAssessments.length > 0) {
+                const totalScore = visibleAssessments.reduce((sum, assessment) => sum + parseInt(assessment.matchScore), 0);
+                const averageScore = Math.round(totalScore / visibleAssessments.length);
                 document.getElementById('matchScore').textContent = `${averageScore}%`;
             }
         }
@@ -870,17 +949,22 @@
         function loadRecommendations() {
             const recommendations = JSON.parse(localStorage.getItem('recommendations')) || [];
             const recommendationsList = document.getElementById('recommendationsList');
-            
-            if (recommendations.length === 0) {
+
+            // Filter recommendations by owner
+            const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const ownerId = currentUser.username || currentUser.email || null;
+            const visibleRecs = recommendations.filter(r => r.owner ? (ownerId && r.owner === ownerId) : false);
+
+            if (visibleRecs.length === 0) {
                 // Show empty state (already in HTML)
                 return;
             }
-            
+
             // Clear empty state
             recommendationsList.innerHTML = '';
-            
+
             // Display recommendations (limit to 3 for dashboard)
-            recommendations.slice(0, 3).forEach(rec => {
+            visibleRecs.slice(0, 3).forEach(rec => {
                 const recDiv = document.createElement('div');
                 recDiv.className = 'mb-3 p-3 border rounded';
                 recDiv.innerHTML = `
@@ -934,28 +1018,57 @@
         }
 
         function setupEventListeners() {
-            // Logout button
-            document.getElementById('logoutBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Clear local storage
-                localStorage.removeItem('isLoggedIn');
-                localStorage.removeItem('careerCompassUser');
-                
-                // Redirect to home page
-                window.location.href = 'index.html';
-            });
-            
-            // Remove career buttons (event delegation)
-            document.getElementById('savedCareersList').addEventListener('click', function(e) {
-                if (e.target.classList.contains('remove-career-btn') || 
-                    e.target.closest('.remove-career-btn')) {
-                    const button = e.target.classList.contains('remove-career-btn') ? 
-                        e.target : e.target.closest('.remove-career-btn');
-                    const careerId = button.getAttribute('data-career-id');
-                    removeCareer(careerId);
-                }
-            });
+            // Logout button (guard if not present)
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Clear local storage
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('careerCompassUser');
+
+                    // Redirect to home page
+                    window.location.href = 'index.html';
+                });
+            }
+
+            // Remove career buttons (event delegation) - guard container
+            const savedCareersContainer = document.getElementById('savedCareersList');
+            if (savedCareersContainer) {
+                savedCareersContainer.addEventListener('click', function(e) {
+                    if (e.target.classList.contains('remove-career-btn') || 
+                        e.target.closest('.remove-career-btn')) {
+                        const button = e.target.classList.contains('remove-career-btn') ? 
+                            e.target : e.target.closest('.remove-career-btn');
+                        const careerId = button.getAttribute('data-career-id');
+                        removeCareer(careerId);
+                    }
+                });
+            }
+
+            // Reset data buttons (for shared devices / demo)
+            const resetSavedBtn = document.getElementById('resetSavedBtn');
+            const resetAssessmentsBtn = document.getElementById('resetAssessmentsBtn');
+            const resetRecommendationsBtn = document.getElementById('resetRecommendationsBtn');
+            const resetAllBtn = document.getElementById('resetAllBtn');
+
+            if (resetSavedBtn) resetSavedBtn.addEventListener('click', function() { resetSavedCareers(); });
+            if (resetAssessmentsBtn) resetAssessmentsBtn.addEventListener('click', function() { resetAssessments(); });
+            if (resetRecommendationsBtn) resetRecommendationsBtn.addEventListener('click', function() { resetRecommendations(); });
+            if (resetAllBtn) resetAllBtn.addEventListener('click', function() { resetAllData(); });
+
+            // Clear my data for current user
+            const clearMyDataBtn = document.getElementById('clearMyDataBtn');
+            if (clearMyDataBtn) clearMyDataBtn.addEventListener('click', function() { clearMyData(); });
+
+            // Export my data
+            const exportDataBtn = document.getElementById('exportDataBtn');
+            if (exportDataBtn) exportDataBtn.addEventListener('click', function() { exportMyData(); });
+
+            // Export PDF button removed
+
+            // Email summary button removed
         }
 
         function removeCareer(careerId) {
@@ -1006,35 +1119,111 @@
                 }
             }, 5000);
         }
-        
-        // Demo data for first-time users
-        if (!localStorage.getItem('dashboardInitialized')) {
-            // Add some demo data
-            const demoCareers = [
-                { id: 1, title: 'Software Developer', category: 'Technology' },
-                { id: 2, title: 'Data Scientist', category: 'Technology' }
-            ];
-            
-            const demoAssessments = [
-                { id: 1, date: '2023-10-15', topMatch: 'Technology Fields', matchScore: '85' }
-            ];
-            
-            const demoRecommendations = [
-                { title: 'Software Developer', reason: 'Matches your problem-solving skills', match: '92' },
-                { title: 'Data Analyst', reason: 'Aligns with your analytical thinking', match: '87' }
-            ];
-            
-            localStorage.setItem('savedCareers', JSON.stringify(demoCareers));
-            localStorage.setItem('assessments', JSON.stringify(demoAssessments));
-            localStorage.setItem('recommendations', JSON.stringify(demoRecommendations));
-            localStorage.setItem('dashboardInitialized', 'true');
-            
-            // Reload data
+
+        // Reset helpers — clear specific localStorage keys and refresh UI
+        function resetSavedCareers() {
+            if (!confirm('Clear saved careers for this device? This will remove all saved careers stored locally.')) return;
+            localStorage.removeItem('savedCareers');
+            showAlert('Saved careers cleared', 'success');
+            loadSavedCareers();
+            updateProgress();
+        }
+
+        function resetAssessments() {
+            if (!confirm('Clear assessment records for this device? This will remove all assessment history stored locally.')) return;
+            localStorage.removeItem('assessments');
+            showAlert('Assessment records cleared', 'success');
+            loadAssessmentHistory();
+            updateProgress();
+        }
+
+        function resetRecommendations() {
+            if (!confirm('Clear recommendations for this device? This will remove all stored recommendations.')) return;
+            localStorage.removeItem('recommendations');
+            showAlert('Recommendations cleared', 'success');
+            loadRecommendations();
+            updateProgress();
+        }
+
+        function resetAllData() {
+            if (!confirm('Clear saved careers, assessments, and recommendations? This cannot be undone.')) return;
+            localStorage.removeItem('savedCareers');
+            localStorage.removeItem('assessments');
+            localStorage.removeItem('recommendations');
+            // Optionally reset demo init flag so demo data can be re-added if needed
+            localStorage.removeItem('dashboardInitialized');
+            showAlert('All selected dashboard data cleared', 'success');
             loadSavedCareers();
             loadAssessmentHistory();
             loadRecommendations();
             updateProgress();
         }
+
+        // Clear data that belongs only to the current logged-in user
+        function clearMyData() {
+            const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const ownerId = currentUser.username || currentUser.email || null;
+            if (!ownerId) {
+                alert('No user signed in. Clear my data requires a signed-in user.');
+                return;
+            }
+
+            if (!confirm('Clear only your saved careers, assessments, and recommendations? This will not affect other users on this device.')) return;
+
+            // Filter out entries that belong to this user
+            let savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+            savedCareers = savedCareers.filter(sc => !(sc.owner && sc.owner === ownerId));
+            localStorage.setItem('savedCareers', JSON.stringify(savedCareers));
+
+            let assessments = JSON.parse(localStorage.getItem('assessments')) || [];
+            assessments = assessments.filter(a => !(a.owner && a.owner === ownerId));
+            localStorage.setItem('assessments', JSON.stringify(assessments));
+
+            let recommendations = JSON.parse(localStorage.getItem('recommendations')) || [];
+            recommendations = recommendations.filter(r => !(r.owner && r.owner === ownerId));
+            localStorage.setItem('recommendations', JSON.stringify(recommendations));
+
+            showAlert('Your data has been cleared.', 'success');
+            loadSavedCareers();
+            loadAssessmentHistory();
+            loadRecommendations();
+            updateProgress();
+        }
+
+        // Export current user's data as a JSON file
+        function exportMyData() {
+            const currentUser = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+            const ownerId = currentUser.username || currentUser.email || null;
+            if (!ownerId) {
+                alert('No user signed in. Export requires a signed-in user.');
+                return;
+            }
+
+            const saved = (JSON.parse(localStorage.getItem('savedCareers')) || []).filter(s => s.owner && s.owner === ownerId);
+            const assessments = (JSON.parse(localStorage.getItem('assessments')) || []).filter(a => a.owner && a.owner === ownerId);
+            const recs = (JSON.parse(localStorage.getItem('recommendations')) || []).filter(r => r.owner && r.owner === ownerId);
+
+            const data = { exportedAt: new Date().toISOString(), owner: ownerId, saved, assessments, recommendations: recs };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const safeOwner = ownerId.replace(/[^a-z0-9-_]/gi, '_');
+            a.download = `careercompass-${safeOwner}-data.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+            showAlert('Your data export has started.', 'success');
+        }
+
+        // Export PDF feature removed
+
+        // Email summary feature removed
+        
+        // Note: removed demo initialization so dashboard stays empty by default
+        // Demo data should not be injected automatically on first load.
     </script>
 </body>
 </html>

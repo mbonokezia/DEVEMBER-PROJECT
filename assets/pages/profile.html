@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - CareerCompass</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profile-hero {
+            background: linear-gradient(135deg,#3498db,#2c3e50);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
+        .profile-card { border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .form-label { font-weight:600; }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-compass text-primary me-2"></i>Career<span class="text-primary">Compass</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="resources.html">Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" href="assessment.html">Assessment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pathways.html">Career Pathways</a></li>
+                </ul>
+                <div class="navbar-nav">
+                    <a class="nav-link" href="dashboard.html">Dashboard</a>
+                    <a class="btn btn-primary" href="Sign-up.html">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="profile-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 id="profileWelcome">My Profile</h1>
+                    <p id="profileWelcomeSub">Manage your account, view saved careers and assessment history.</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <button id="signOutBtn" class="btn btn-outline-light">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card profile-card p-3">
+                    <div class="text-center">
+                        <div class="rounded-circle bg-light d-inline-flex align-items-center justify-content-center" style="width:96px;height:96px;">
+                            <i class="fas fa-user fa-2x text-secondary"></i>
+                        </div>
+                        <h5 class="mt-3" id="displayName">Student</h5>
+                        <p class="text-muted mb-1" id="displayEmail">you@example.com</p>
+                        <p class="small text-muted" id="displayUsername">@student123</p>
+                    </div>
+                    <hr>
+                    <div class="px-2">
+                        <div class="d-flex justify-content-between mb-2">
+                            <small class="text-muted">Saved Careers</small>
+                            <strong id="profileSavedCount">0</strong>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <small class="text-muted">Assessments</small>
+                            <strong id="profileAssessCount">0</strong>
+                        </div>
+                        <a href="dashboard.html" class="btn btn-outline-primary w-100 mt-2">Go to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8 mb-4">
+                <div class="card profile-card p-4">
+                    <h4>Account Information</h4>
+                    <form id="profileForm" class="mt-3">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label" for="firstName">First name</label>
+                                <input id="firstName" name="firstName" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="lastName">Last name</label>
+                                <input id="lastName" name="lastName" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="email">Email</label>
+                                <input id="email" name="email" type="email" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="username">Username</label>
+                                <input id="username" name="username" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="school">School</label>
+                                <input id="school" name="school" class="form-control" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="gradeLevel">Grade</label>
+                                <input id="gradeLevel" name="gradeLevel" class="form-control" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="bio">Short Bio</label>
+                                <textarea id="bio" name="bio" rows="3" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 d-flex gap-2">
+                            <button id="saveProfile" type="button" class="btn btn-primary">Save Profile</button>
+                            <button id="cancelEdit" type="button" class="btn btn-outline-secondary">Reset</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Saved Careers Preview -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card p-3 profile-card">
+                    <h5>Saved Careers</h5>
+                    <div id="profileSavedList" class="mt-3">
+                        <div class="empty-state text-center py-4">
+                            <i class="far fa-bookmark fa-2x text-muted"></i>
+                            <p class="mt-3 text-muted">No saved careers yet</p>
+                            <a href="pathways.html" class="btn btn-outline-primary">Explore Careers</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer (kept minimal to match site) -->
+    <footer class="main-footer mt-5">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 CareerCompass. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="privacy.html" class="text-white me-3">Privacy Policy</a>
+                    <a href="terms.html" class="text-white">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Load profile data into form and side card
+        function loadProfile() {
+            const user = JSON.parse(localStorage.getItem('careerCompassUser')) || {
+                firstName: 'Student', lastName: '', email: '', username: 'student123', school:'', gradeLevel:'', bio:''
+            };
+            document.getElementById('firstName').value = user.firstName || '';
+            document.getElementById('lastName').value = user.lastName || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('username').value = user.username || '';
+            document.getElementById('school').value = user.school || '';
+            document.getElementById('gradeLevel').value = user.gradeLevel || '';
+            document.getElementById('bio').value = user.bio || '';
+
+            // Side info
+            const displayName = document.getElementById('displayName'); if (displayName) displayName.textContent = `${user.firstName} ${user.lastName}`.trim() || 'Student';
+            const displayEmail = document.getElementById('displayEmail'); if (displayEmail) displayEmail.textContent = user.email || 'you@example.com';
+            const displayUsername = document.getElementById('displayUsername'); if (displayUsername) displayUsername.textContent = `@${user.username || 'student123'}`;
+
+            // Counts
+            const saved = JSON.parse(localStorage.getItem('savedCareers')) || [];
+            const assessments = JSON.parse(localStorage.getItem('assessments')) || [];
+            const ownerId = user.username || user.email || null;
+            const visibleSaved = saved.filter(s => !s.owner || !ownerId || s.owner === ownerId);
+            document.getElementById('profileSavedCount').textContent = visibleSaved.length;
+            document.getElementById('profileAssessCount').textContent = assessments.length;
+
+            // Populate saved list
+            const savedList = document.getElementById('profileSavedList');
+            if (!savedList) return;
+            if (visibleSaved.length === 0) return; // keep empty state
+
+            savedList.innerHTML = '';
+            visibleSaved.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'd-flex align-items-center justify-content-between border-bottom py-2';
+                div.innerHTML = `<div><strong>${c.title}</strong><div class="small text-muted">${c.category||''}</div></div><div><a href="pathways.html?career=${encodeURIComponent(c.title)}" class="btn btn-sm btn-outline-primary">View</a></div>`;
+                savedList.appendChild(div);
+            });
+        }
+
+        function saveProfile() {
+            const user = {
+                firstName: document.getElementById('firstName').value.trim(),
+                lastName: document.getElementById('lastName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                username: document.getElementById('username').value.trim(),
+                school: document.getElementById('school').value.trim(),
+                gradeLevel: document.getElementById('gradeLevel').value.trim(),
+                bio: document.getElementById('bio').value.trim()
+            };
+            localStorage.setItem('careerCompassUser', JSON.stringify(user));
+            showSavedNotice();
+            loadProfile();
+        }
+
+        function resetProfileForm() {
+            // Clear the form fields to empty/default values
+            const fields = ['firstName','lastName','email','username','school','gradeLevel','bio'];
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            // Update side display to defaults
+            const displayName = document.getElementById('displayName'); if (displayName) displayName.textContent = 'Student';
+            const displayEmail = document.getElementById('displayEmail'); if (displayEmail) displayEmail.textContent = 'you@example.com';
+            const displayUsername = document.getElementById('displayUsername'); if (displayUsername) displayUsername.textContent = '@student123';
+        }
+
+        function showSavedNotice() {
+            const alert = document.createElement('div');
+            alert.className = 'alert alert-success position-fixed top-0 end-0 m-3';
+            alert.style.zIndex = 9999;
+            alert.textContent = 'Profile saved';
+            document.body.appendChild(alert);
+            setTimeout(()=>{ if (alert.parentNode) alert.remove(); }, 2500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function(){
+            loadProfile();
+
+            const btn = document.getElementById('saveProfile'); if (btn) btn.addEventListener('click', saveProfile);
+            const cancel = document.getElementById('cancelEdit'); if (cancel) cancel.addEventListener('click', resetProfileForm);
+            const signOut = document.getElementById('signOutBtn'); if (signOut) signOut.addEventListener('click', function(){ localStorage.removeItem('isLoggedIn'); localStorage.removeItem('careerCompassUser'); window.location.href='index.html'; });
+        });
+    </script>
+</body>
+</html>

@@ -741,19 +741,19 @@
                                 </div>
                                 <div class="question-options">
                                     <button type="button" class="option-btn" data-question="12" data-value="highschool">
-                                        <i class="fas fa-school me-3"></i>High School Diploma
+                                        <i class="fas fa-school me-3"></i>High School Certificate
                                     </button>
                                     <button type="button" class="option-btn" data-question="12" data-value="certificate">
-                                        <i class="fas fa-certificate me-3"></i>Certificate/Diploma
+                                        <i class="fas fa-certificate me-3"></i>Higher National Diploma(HND)
                                     </button>
                                     <button type="button" class="option-btn" data-question="12" data-value="associate">
-                                        <i class="fas fa-user-graduate me-3"></i>Associate Degree
+                                        <i class="fas fa-user-graduate me-3"></i>Bachelor's Degree
                                     </button>
                                     <button type="button" class="option-btn" data-question="12" data-value="bachelor">
-                                        <i class="fas fa-university me-3"></i>Bachelor's Degree
+                                        <i class="fas fa-university me-3"></i>Masters level
                                     </button>
                                     <button type="button" class="option-btn" data-question="12" data-value="graduate">
-                                        <i class="fas fa-user-md me-3"></i>Graduate/Professional Degree
+                                        <i class="fas fa-user-md me-3"></i>PHD...
                                     </button>
                                 </div>
                             </div>
@@ -766,19 +766,19 @@
                                 </div>
                                 <div class="question-options">
                                     <button type="button" class="option-btn" data-question="13" data-value="low">
-                                        <i class="fas fa-money-bill me-3"></i>$30,000 - $50,000
+                                        <i class="fas fa-money-bill me-3"></i>1000,000 - 3000,000XAF
                                     </button>
                                     <button type="button" class="option-btn" data-question="13" data-value="medium">
-                                        <i class="fas fa-money-bill-wave me-3"></i>$50,000 - $80,000
+                                        <i class="fas fa-money-bill-wave me-3"></i>4000,000 - 10,000,000XAF
                                     </button>
                                     <button type="button" class="option-btn" data-question="13" data-value="high">
-                                        <i class="fas fa-money-check-alt me-3"></i>$80,000 - $120,000
+                                        <i class="fas fa-money-check-alt me-3"></i>11000,000 - 20,000,000XAF
                                     </button>
                                     <button type="button" class="option-btn" data-question="13" data-value="veryhigh">
-                                        <i class="fas fa-chart-line me-3"></i>$120,000+
+                                        <i class="fas fa-chart-line me-3"></i>20,000,000+
                                     </button>
                                     <button type="button" class="option-btn" data-question="13" data-value="variable">
-                                        <i class="fas fa-exchange-alt me-3"></i>Variable/Commission-based
+                                        <i class="fas fa-exchange-alt me-3"></i>Variable yearly Salaries based on the job.
                                     </button>
                                 </div>
                             </div>
@@ -879,7 +879,7 @@
                 <div class="col-lg-4 mb-4">
                     <h4 class="mb-3"><i class="fas fa-compass me-2"></i>CareerCompass</h4>
                     <p>Guiding secondary school students towards fulfilling career paths through personalized assessment and resources.</p>
-                    <div class="social-links mt-3">
+                    <div class="social-links mt-3 d-flex justify-content-start">
                         <a href="#" class="text-white me-3"><i class="fab fa-facebook fa-lg"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
                         <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
@@ -909,9 +909,9 @@
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5 class="mb-3">Contact Us</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> support@careercompass.edu</li>
-                        <li class="mb-2"><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
-                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Education Street</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> mbonokezia@gmail.com</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> 672649076</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> Bamenda</li>
                     </ul>
                 </div>
             </div>
@@ -920,7 +920,7 @@
             
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
-                    <p>&copy; 2023 CareerCompass. All rights reserved.</p>
+                    <p>&copy; 2025 CareerCompass. All rights reserved.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <p>
@@ -1273,6 +1273,48 @@
                     saveCareerResult(careerName, this);
                 });
             });
+
+            // Persist recommendations to localStorage for Dashboard
+            try {
+                const recommendations = careerMatches.map(c => ({
+                    title: c.title,
+                    match: c.match,
+                    description: c.description || '',
+                    reason: c.reason || '',
+                    timestamp: Date.now()
+                }));
+                localStorage.setItem('recommendations', JSON.stringify(recommendations));
+            } catch (err) {
+                console.error('Failed to save recommendations', err);
+            }
+
+            // Compute and display further recommendations (related careers)
+            const furtherContainer = document.getElementById('furtherRecommendations');
+            if (furtherContainer) {
+                const allCareersList = window._allCareers || [];
+                const topTitles = careerMatches.map(c => c.title);
+                const related = allCareersList
+                    .filter(c => !topTitles.includes(c.title) && c.categories && careerMatches.some(tm => tm.categories && tm.categories.some(cat => c.categories.includes(cat))))
+                    .slice(0, 3)
+                    .map(c => ({ title: c.title, match: c.match || 0, description: c.description || ''}));
+
+                if (related.length === 0) {
+                    furtherContainer.innerHTML = '<p class="text-muted">No additional related recommendations found.</p>';
+                } else {
+                    furtherContainer.innerHTML = '<h4 class="mb-3">Further recommendations</h4>' +
+                        related.map(r => `
+                            <div class="card mb-2">
+                                <div class="card-body d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>${r.title}</strong>
+                                        <div class="small text-muted">Match: ${r.match}%</div>
+                                    </div>
+                                    <a href="pathways.html?career=${encodeURIComponent(r.title)}" class="btn btn-sm btn-outline-primary">Learn more</a>
+                                </div>
+                            </div>
+                        `).join('');
+                }
+            }
             
             // Scroll to results
             resultsContainer.scrollIntoView({ behavior: 'smooth' });
@@ -1372,6 +1414,9 @@
                 career.match = Math.min(95, Math.round(matchScore));
             });
             
+            // expose full career list for later related-recommendation lookups
+            window._allCareers = allCareers;
+
             // Sort by match score and return top 6
             return allCareers
                 .sort((a, b) => b.match - a.match)
@@ -1394,6 +1439,18 @@
                 
                 // Show success message
                 showAlert(`"${careerName}" has been saved to your profile!`, 'success');
+                // Persist to savedCareers so it appears on the Dashboard
+                try {
+                    const savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+                    const user = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+                    const owner = user.username || user.email || null;
+                    if (!savedCareers.some(c => c.title === careerName && c.owner === owner)) {
+                        savedCareers.unshift({ id: Date.now(), title: careerName, savedAt: Date.now(), owner });
+                        localStorage.setItem('savedCareers', JSON.stringify(savedCareers));
+                    }
+                } catch (err) {
+                    console.error('Failed to persist saved career', err);
+                }
                 
                 // Revert after 2 seconds
                 setTimeout(() => {
@@ -1414,6 +1471,22 @@
             button.disabled = true;
             
             setTimeout(() => {
+                // Also persist recommendations into savedCareers
+                try {
+                    const recommendations = JSON.parse(localStorage.getItem('recommendations')) || [];
+                    const savedCareers = JSON.parse(localStorage.getItem('savedCareers')) || [];
+                    const user = JSON.parse(localStorage.getItem('careerCompassUser')) || {};
+                    const owner = user.username || user.email || null;
+                    recommendations.forEach(rec => {
+                        if (!savedCareers.some(sc => sc.title === rec.title && sc.owner === owner)) {
+                            savedCareers.unshift({ id: Date.now() + Math.floor(Math.random() * 1000), title: rec.title, savedAt: Date.now(), owner });
+                        }
+                    });
+                    localStorage.setItem('savedCareers', JSON.stringify(savedCareers));
+                } catch (err) {
+                    console.error('Failed saving recommendations to savedCareers', err);
+                }
+
                 showAlert('Your assessment results have been saved to your dashboard!', 'success');
                 button.innerHTML = originalHTML;
                 button.disabled = false;
